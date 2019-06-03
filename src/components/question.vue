@@ -4,7 +4,7 @@
    
 
     <template slot="lead">
-      {{curQ.question}}
+      {{curQ.question | decoder}}
     </template>
 
     <hr class="my-4">
@@ -14,7 +14,7 @@
   @click.prevent="selectAns(i)"
   :class="answerClass(i)"
   >
-      {{answer}}
+      {{answer | decoder}}
   </b-list-group-item>
 </b-list-group>
    
@@ -37,6 +37,13 @@ export default {
             selectedIndex: null, correctIndex: null,
             shuffledAnswers: [], answered: false
         }
+    },
+    filters: {
+    decoder(str) {
+      var textArea = document.createElement("textarea");
+      textArea.innerHTML = str;
+      return textArea.value;
+    }
     },
     computed: {
         answers(){
